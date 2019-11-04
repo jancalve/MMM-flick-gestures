@@ -1,0 +1,23 @@
+{
+  "name": "flick_wrapper",
+  "version": "1.0.0",
+  "description": "A NodeJS wrapper to read and relay data retrieved from the Flick gesture board",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "flick",
+    "board",
+    "python",
+    "magic",
+    "mirror",
+    "magicmirror",
+    "nodejs"
+  ],
+  "author": "Jan Christian Alvestad",
+  "license": "MIT",
+  "devDependencies": {
+    "python-shell": "^1.0.7"
+  }
+}
