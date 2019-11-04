@@ -12,8 +12,6 @@ This module will emit 2 events - PAGE_DECREMENT when swiped left and PAGE_INCREM
 # Not tested with - but should work
 - Flick Zero
 - Flick HAT
-
-# Not tested - but might work
 - Any board using MGC3130 3D Tracking and Gesture Controller 
 
 
