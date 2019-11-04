@@ -33,7 +33,7 @@ modules: [
 
 ## Requirements
 
-Flicklib python library installed 
+Flicklib python library installed <br>
 MGC3130 controller board
 
 ## Installation
