@@ -1,4 +1,5 @@
 var NodeHelper = require('node_helper');
+var exec = require("child_process").exec;
 
 var myPythonScriptPath = '/home/pi/MagicMirror/modules/MMM-flick-gestures/monitor.py';
 const {PythonShell} = require("python-shell");
@@ -30,26 +31,70 @@ module.exports = NodeHelper.create({
    },
 
    socketNotificationReceived: function (noti, payload) {
-       this.job(payload)
+       this.process(payload)
    },
 
-   job: function (config) {
+   powerOff: function() {
+    console.log('Power off HDMI');
+    exec("/opt/vc/bin/tvservice -o",  function (error, stdout, stderr) {
+        if(error!=null)
+        {
+            console.log("/opt/vc/bin/tvservice -o failed "+JSON.stringify(error));
+        }
+    });
+   },
+   powerOn: function() {
+       var me = this;
+        console.log('Power on HDMI');
+       exec("/opt/vc/bin/tvservice -p",  function (error, stdout, stderr) {
+        if(error!=null)
+        {
+            console.log("/opt/vc/bin/tvservice -o failed "+JSON.stringify(error));
+        }
+        else {
+            chtv6();
+        }
+        
+    });
+   },
+   chtv6: function() {
+    exec("sudo chtv6",  function (error, stdout, stderr) {
+        if(error!=null)
+        {
+            console.log("chtv6 failed "+JSON.stringify(error));
+        }
+        else {
+            chtv7();
+        }
+    });    
+   },
+   chtv7: function() {
+    exec("sudo chtv7",  function (error, stdout, stderr) {
+        if(error!=null)
+        {
+            console.log("chtv7 failed "+JSON.stringify(error));
+        }
+    });    
+   },
+
+   process: function (config) {
 	var me = this;
        var pyshell = new PythonShell(myPythonScriptPath, options);
        pyshell.on('message', function (message) {
            // relay event to modules
            console.log(message);
+           
         if (message === 'west -  east') {
             me.sendSocketNotification("PAGE_DECREMENT");
 	    }
-        else if (message === 'north -  south') {
+        else if (message === 'east -  west') {
             me.sendSocketNotification("PAGE_DECREMENT");
        }
        else if (message === 'south -  north') {
-        me.sendSocketNotification("PAGE_INCREMENT");
+            me.powerOn()
         }
-        else if (message === 'east -  west') {
-            me.sendSocketNotification("PAGE_INCREMENT");
+        else if (message === 'north -  south') {
+            me.powerOff()
        }
        });
 
