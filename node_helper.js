@@ -36,46 +36,22 @@ module.exports = NodeHelper.create({
 
    powerOff: function() {
     console.log('Power off HDMI');
-    exec("/opt/vc/bin/tvservice -o",  function (error, stdout, stderr) {
+    exec("vcgencmd display_power 0",  function (error, stdout, stderr) {
         if(error!=null)
         {
-            console.log("/opt/vc/bin/tvservice -o failed "+JSON.stringify(error));
+            console.log("vcgencmd display_power 0 failed "+JSON.stringify(error));
         }
     });
    },
    powerOn: function() {
        var me = this;
         console.log('Power on HDMI');
-       exec("/opt/vc/bin/tvservice -p",  function (error, stdout, stderr) {
+       exec("vcgencmd display_power 1",  function (error, stdout, stderr) {
         if(error!=null)
         {
-            console.log("/opt/vc/bin/tvservice -o failed "+JSON.stringify(error));
-        }
-        else {
-            me.chtv6(me);
-        }
-        
+            console.log("vcgencmd display_power 1 failed "+JSON.stringify(error));
+        }        
     });
-   },
-   chtv6: function(scope) {
-       var me = scope;
-    exec("sudo chtv6",  function (error, stdout, stderr) {
-        if(error!=null)
-        {
-            console.log("chtv6 failed "+JSON.stringify(error));
-        }
-        else {
-            me.chtv7();
-        }
-    });    
-   },
-   chtv7: function() {
-    exec("sudo chtv7",  function (error, stdout, stderr) {
-        if(error!=null)
-        {
-            console.log("chtv7 failed "+JSON.stringify(error));
-        }
-    });    
    },
 
    process: function (config) {
