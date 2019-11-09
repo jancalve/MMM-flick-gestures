@@ -52,19 +52,20 @@ module.exports = NodeHelper.create({
             console.log("/opt/vc/bin/tvservice -o failed "+JSON.stringify(error));
         }
         else {
-            chtv6();
+            me.chtv6(me);
         }
         
     });
    },
-   chtv6: function() {
+   chtv6: function(scope) {
+       var me = scope;
     exec("sudo chtv6",  function (error, stdout, stderr) {
         if(error!=null)
         {
             console.log("chtv6 failed "+JSON.stringify(error));
         }
         else {
-            chtv7();
+            me.chtv7();
         }
     });    
    },
