@@ -7,7 +7,6 @@ let options = {
     mode: 'text',
     pythonPath: '/usr/bin/python',
     pythonOptions: ['-u'], // get print results in real-time
-//  scriptPath: '',
     args: []
 };
 
@@ -16,6 +15,7 @@ let options = {
 module.exports = NodeHelper.create({
 
    start: function () {
+        console.log("[GESTURE] Starting...")
        this.config = {}
        this.gestureSequence = ""
        this.commandTimer = null
@@ -23,48 +23,41 @@ module.exports = NodeHelper.create({
    },
 
    stop: function () {
-       this.log("[GESTURE] Finishing...")
+       console.log("[GESTURE] Stopping...")
        if (this.shell) {
            this.shell.end()
        }
    },
 
    socketNotificationReceived: function (noti, payload) {
-
        this.job(payload)
-
-    
-   },
-
-   log: function (obj) {
-       // if (this.config.verbose) {
-       console.log(obj)
-       //  }
    },
 
    job: function (config) {
 	var me = this;
-       console.log('I got a job!');
        var pyshell = new PythonShell(myPythonScriptPath, options);
        pyshell.on('message', function (message) {
            // relay event to modules
-           // console.log(message);
+           console.log(message);
         if (message === 'west -  east') {
-            // console.log('Sending page dec.');
             me.sendSocketNotification("PAGE_DECREMENT");
 	    }
-        else if (message === 'east -  west') {
-            //console.log('Sending page inc.');
-            me.sendSocketNotification("PAGE_INCREMENT");
-
+        else if (message === 'north -  south') {
+            me.sendSocketNotification("PAGE_DECREMENT");
+       }
+       else if (message === 'south -  north') {
+        me.sendSocketNotification("PAGE_INCREMENT");
         }
+        else if (message === 'east -  west') {
+            me.sendSocketNotification("PAGE_INCREMENT");
+       }
        });
 
        pyshell.end(function (err) {
            if (err) {
                throw err;
            }
-           console.log('finished');
+           console.log('pyShell finished with err ' + err);
        });
 
    }

@@ -17,23 +17,15 @@ Module.register("MMM-flick-gestures",{
 	requiresVersion: '2.1.0',
 
 	defaults: {
-		text: "Hello World!"
 	},
 
 	// Override dom generator.
 	getDom: function() {
-		console.log('getDom()');
-		Log.log('getDom()');
 		var wrapper = document.createElement("div");
-		wrapper.innerHTML = this.config.text;
 		return wrapper;
 	},
 	start: function() {
-		console.log('start()');
-                Log.log('start()');
-		this.mySpecialProperty = "So much wow!";
-		Log.log(this.name + ' is started!');
-                this.sendSocketNotification("INIT", this.config)
+        this.sendSocketNotification("INIT", this.config)
 	},
 socketNotificationReceived: function(notification, payload) {
 		
@@ -41,20 +33,3 @@ socketNotificationReceived: function(notification, payload) {
 	this.sendNotification(notification);
 }
 });
-
-
-/*
-pyshell.on('message', function (message) {
-    // relay event to modules
-                Log.log(message);
-    console.log(message);
-});
-
-pyshell.end(function (err) {
-    if (err){
-        throw err;
-    };
-                Log.log('flick finished');
-    console.log('finished');
-});
-*/
