@@ -59,7 +59,7 @@ module.exports = NodeHelper.create({
        var pyshell = new PythonShell(myPythonScriptPath, options);
        pyshell.on('message', function (message) {
            // relay event to modules
-           console.log(message);
+           //console.log(message);
            
         if (message === 'west -  east') {
             me.sendSocketNotification("PAGE_DECREMENT");
