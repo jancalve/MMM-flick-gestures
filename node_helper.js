@@ -65,7 +65,7 @@ module.exports = NodeHelper.create({
             me.sendSocketNotification("PAGE_DECREMENT");
 	    }
         else if (message === 'east -  west') {
-            me.sendSocketNotification("PAGE_DECREMENT");
+            me.sendSocketNotification("PAGE_INCREMENT");
        }
        else if (message === 'south -  north') {
             me.powerOn()
