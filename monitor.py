@@ -107,4 +107,4 @@ while True:
         doubletaptxt = ''
         doubletapcount = 0
 
-    time.sleep(1)
+    time.sleep(10)
